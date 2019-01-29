@@ -1,0 +1,67 @@
+
+import numpy as np   
+import h5py as h5
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import pandas as pd
+import re, string, timeit
+from string import punctuation
+import sklearn
+from sklearn.feature_extraction.text import CountVectorizer
+from collections import Counter
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from sklearn import preprocessing
+import statsmodels.api as sm
+from scipy.interpolate import *
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+import statsmodels as s
+from numpy.polynomial import polynomial
+import scipy
+import math
+from sys import stdout
+from sklearn.preprocessing import PolynomialFeatures
+import statsmodels as s
+from numpy.polynomial import polynomial
+import scipy
+from sklearn import linear_model
+import statsmodels.formula.api as smf
+
+
+#representation////////////////////////////////
+
+#set data------------------------------------------------------------------
+
+dataset= pd.read_csv('C:/train.csv')
+
+
+#remove punctuation---------------------------------------------------------
+def remove_punctuation(s):
+    s = ''.join([i for i in s if i not in frozenset(string.punctuation)])
+    return s
+
+dataset['question_text'] = dataset['question_text'].apply(remove_punctuation)
+dataset['question_text'] = ''.join([i for i in dataset['question_text'] if not i.isdigit()])
+
+#split to train,validate and test----------------------------------------------
+train, validate, test = np.split(dataset.sample(frac=1), [int(.5*len(dataset)), int(.99*len(dataset))])
+
+
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
+text_data = np.array(test['question_text'])
+
+# Create the bag of words feature matrix
+count = CountVectorizer()
+bag_of_words = count.fit_transform(text_data)
+bag_of_words.toarray()
+
+feature_names = count.get_feature_names()
+
+# View feature names
+feature_names
+pd.DataFrame(bag_of_words.toarray(), columns=feature_names)
+
